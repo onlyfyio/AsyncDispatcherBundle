@@ -2,7 +2,6 @@
 
 namespace BBIT\AsyncDispatcherBundle\Component\EventDispatcher;
 
-use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -29,19 +28,19 @@ class AsynchronousEventDispatcher implements EventDispatcherInterface
     public function dispatchAsync()
     {
         foreach ($this->asyncEvents as $eachEntry) {
-            $this->dispatcher->dispatch($eachEntry['name'], $eachEntry['event']);
+            $this->dispatcher->dispatch($eachEntry['event'], $eachEntry['name']);
         }
     }
 
     /**
-    * Store an asynchronous event to be dispatched later.
-    *
-    * @param string $eventName
-    * @param Event|null $event
-    *
-    * @return void
-    */
-    public function addAsyncEvent($eventName, $event = null)
+     * Store an asynchronous event to be dispatched later.
+     *
+     * @param $event
+     * @param string|null $eventName
+     *
+     * @return void
+     */
+    public function addAsyncEvent($event, string $eventName = null)
     {
         $this->asyncEvents[] = array(
             'name' => $eventName,
@@ -53,13 +52,13 @@ class AsynchronousEventDispatcher implements EventDispatcherInterface
     {
         return $this->dispatcher->addListener($eventName, $listener, $priority);
     }
-    
-    // @codeCoverageIgnoreStart 
-    public function dispatch($eventName, Event $event = null)
+
+    // @codeCoverageIgnoreStart
+    public function dispatch($event, $eventName = null)
     {
-        return $this->dispatcher->dispatch($eventName, $event);
+        return $this->dispatcher->dispatch($event, $eventName);
     }
-    
+
     public function addSubscriber(EventSubscriberInterface $subscriber)
     {
         return $this->dispatcher->addSubscriber($subscriber);
@@ -84,7 +83,7 @@ class AsynchronousEventDispatcher implements EventDispatcherInterface
     {
         return $this->dispatcher->hasListeners($eventName);
     }
-    
+
     public function getListenerPriority($eventName, $listener)
     {
         return $this->dispatcher->getListenerPriority($eventName, $listener);

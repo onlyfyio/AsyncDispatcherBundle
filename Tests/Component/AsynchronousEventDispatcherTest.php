@@ -5,7 +5,7 @@ namespace BBIT\AsyncDispatcherBundle\Tests\Component;
 use BBIT\AsyncDispatcherBundle\Component\EventDispatcher\AsynchronousEventDispatcher;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contract\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -40,7 +40,7 @@ class AsynchronousEventDispatcherTest extends WebTestCase
 
         $mockupEvent = new MockupEvent();
 
-        $dispatcher->addAsyncEvent("test_event", $mockupEvent);
+        $dispatcher->addAsyncEvent($mockupEvent, "test_event");
         $dispatcher->addListener("test_event", function($event, $name) use ($mockupEvent)
         {
             $this->assertTrue($event instanceof MockupEvent);
