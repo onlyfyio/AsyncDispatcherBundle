@@ -1,5 +1,10 @@
 <?php
 
+namespace BBIT\AsyncDispatcherBundle\Tests\App;
+
+use BBIT\AsyncDispatcherBundle\BBITAsyncDispatcherBundle;
+use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
+use Symfony\Bundle\SecurityBundle\SecurityBundle;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
@@ -9,10 +14,10 @@ class AppKernel extends Kernel
     {
         $bundles = array(
             // Dependencies
-            new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
-            new Symfony\Bundle\SecurityBundle\SecurityBundle(),
+            new FrameworkBundle(),
+            new SecurityBundle(),
             // My Bundle to test
-            new BBIT\AsyncDispatcherBundle\BBITAsyncDispatcherBundle(),
+            new BBITAsyncDispatcherBundle(),
         );
 
         return $bundles;
