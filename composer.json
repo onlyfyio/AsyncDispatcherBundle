@@ -20,7 +20,7 @@
         "php": ">=7.1"
     },
     "require-dev": {
-        "symfony/symfony": ">4.3.*",
+        "symfony/symfony": ">=4.3",
         "satooshi/php-coveralls": "v0.6.1"
     },
     "autoload": {
