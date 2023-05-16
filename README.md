@@ -57,7 +57,7 @@ public function registerBundles()
 
 ``` php
 $dispatcher = $this->container->get('bbit_async_dispatcher.dispatcher'); // get dispatcher service
-$dispatcher->addAsyncEvent('name_of_the.event', new CustomEvent($entity));
+$dispatcher->addAsyncEvent(new CustomEvent($entity), 'name_of_the.event');
 ```
 
 
