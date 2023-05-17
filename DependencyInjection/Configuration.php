@@ -17,9 +17,6 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $treeBuilder->root('bbit_async_dispatcher');
-
-        return $treeBuilder;
+        return new TreeBuilder('bbit_async_dispatcher');
     }
 }

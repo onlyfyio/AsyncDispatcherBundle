@@ -4,46 +4,35 @@ namespace BBIT\AsyncDispatcherBundle\Tests\Component;
 
 use BBIT\AsyncDispatcherBundle\Component\EventDispatcher\AsynchronousEventDispatcher;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 
 class AsynchronousEventDispatcherTest extends WebTestCase
 {
-    /**
-     * @var \Symfony\Component\HttpKernel\Client
-     */
-    protected $client;
 
-    /**
-     * @var ContainerInterface
-     */
-    protected $container;
-
-    public function setUp()
+    public function setUp(): void
     {
-	    $this->client = static::createClient();
-	    $this->container = $this->client->getContainer();
+        self::bootKernel();
     }
 
-    public function testServiceLoaded()
+    public function testServiceLoaded(): void
     {
-       $this->assertEquals(get_class($this->container->get('bbit_async_dispatcher.dispatcher')), 'BBIT\AsyncDispatcherBundle\Component\EventDispatcher\AsynchronousEventDispatcher');
+       $this->assertInstanceOf(AsynchronousEventDispatcher::class, self::$container->get('bbit_async_dispatcher.dispatcher'));
     }
 
-    public function testListenerIsCalled()
+    public function testListenerIsCalled(): void
     {
         /** @var AsynchronousEventDispatcher $dispatcher */
-        $dispatcher = $this->container->get('bbit_async_dispatcher.dispatcher');
+        $dispatcher = self::$container->get('bbit_async_dispatcher.dispatcher');
 
         $mockupEvent = new MockupEvent();
 
-        $dispatcher->addAsyncEvent("test_event", $mockupEvent);
+        $dispatcher->addAsyncEvent($mockupEvent, "test_event");
         $dispatcher->addListener("test_event", function($event, $name) use ($mockupEvent)
         {
-            $this->assertTrue($event instanceof MockupEvent);
+            $this->assertInstanceOf(MockupEvent::class, $event);
             $this->assertEquals($mockupEvent, $event);
 
             $this->assertEquals("test_event", $name);
