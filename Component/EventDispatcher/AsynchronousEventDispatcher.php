@@ -54,7 +54,7 @@ class AsynchronousEventDispatcher implements EventDispatcherInterface
     }
 
     // @codeCoverageIgnoreStart
-    public function dispatch($event, $eventName = null)
+    public function dispatch(object $event, string $eventName = null): object
     {
         return $this->dispatcher->dispatch($event, $eventName);
     }
