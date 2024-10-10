@@ -48,13 +48,13 @@ class AsynchronousEventDispatcher implements EventDispatcherInterface
         );
     }
 
-    public function addListener($eventName, $listener, $priority = 0)
+    public function addListener(string $eventName, callable $listener, int $priority = 0)
     {
         return $this->dispatcher->addListener($eventName, $listener, $priority);
     }
 
     // @codeCoverageIgnoreStart
-    public function dispatch(object $event, string $eventName = null): object
+    public function dispatch(object $event, ?string $eventName = null): object
     {
         return $this->dispatcher->dispatch($event, $eventName);
     }
@@ -64,7 +64,7 @@ class AsynchronousEventDispatcher implements EventDispatcherInterface
         return $this->dispatcher->addSubscriber($subscriber);
     }
 
-    public function removeListener($eventName, $listener)
+    public function removeListener(string $eventName, callable $listener)
     {
         return $this->dispatcher->removeListener($eventName, $listener);
     }
@@ -74,17 +74,17 @@ class AsynchronousEventDispatcher implements EventDispatcherInterface
         $this->dispatcher->removeSubscriber($subscriber);
     }
 
-    public function getListeners($eventName = null)
+    public function getListeners(?string $eventName = null): array
     {
         return $this->dispatcher->getListeners($eventName);
     }
 
-    public function hasListeners($eventName = null)
+    public function hasListeners(?string $eventName = null): bool
     {
         return $this->dispatcher->hasListeners($eventName);
     }
 
-    public function getListenerPriority($eventName, $listener)
+    public function getListenerPriority(string $eventName, callable $listener): ?int
     {
         return $this->dispatcher->getListenerPriority($eventName, $listener);
     }
